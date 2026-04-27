@@ -261,3 +261,129 @@ export const JOB_CATEGORIES: string[] = [
   'Electrical', 'Networking', 'HVAC', 'Solar',
   'Plumbing', 'Mechanical', 'Safety Systems', 'Civil',
 ]
+// ─── Extended Worker Data ─────────────────────────────────────────────
+export type WorkerAvailability = 'available' | 'busy' | 'leave' | 'off-duty'
+
+export interface WorkerDetail extends Worker {
+  phone:        string
+  email:        string
+  nic:          string
+  address:      string
+  joinedDate:   string
+  availability: WorkerAvailability
+  skills:       string[]
+  certifications: string[]
+  totalEarnings: string
+  currentJob?:  string
+  avatar:       string
+}
+
+export const WORKER_AVAILABILITY_STYLE: Record<WorkerAvailability, { bg: string; color: string; label: string }> = {
+  'available': { bg: 'rgba(16,185,129,0.12)',  color: '#34d399', label: 'Available' },
+  'busy':      { bg: 'rgba(59,130,246,0.12)',  color: '#60a5fa', label: 'On Job'    },
+  'leave':     { bg: 'rgba(245,158,11,0.12)',  color: '#f59e0b', label: 'On Leave'  },
+  'off-duty':  { bg: 'rgba(107,114,128,0.12)', color: '#9ca3af', label: 'Off Duty'  },
+}
+
+export const MOCK_WORKERS_DETAIL: WorkerDetail[] = [
+  {
+    id: 'W-001', name: 'Ashan Perera',
+    role: 'Electrical Engineer', status: 'on-job',
+    availability: 'busy',
+    completedJobs: 142, rating: 4.9,
+    location: 'Kandy', totalEarnings: 'LKR 1,840,000',
+    phone: '+94 77 123 4567', email: 'ashan.perera@ceylofield.lk',
+    nic: '921234567V', address: '45/A Peradeniya Rd, Kandy',
+    joinedDate: '2021-03-15',
+    currentJob: 'JOB-001',
+    avatar: 'AP',
+    skills: ['High Voltage Systems','Panel Wiring','Load Balancing','PLC Programming','Solar Integration'],
+    certifications: ['NVQ Level 5 Electrical','IEEE Certified','CIDA Registered'],
+  },
+  {
+    id: 'W-002', name: 'Nuwan Silva',
+    role: 'Fiber Technician', status: 'active',
+    availability: 'available',
+    completedJobs: 98, rating: 4.7,
+    location: 'Colombo', totalEarnings: 'LKR 980,000',
+    phone: '+94 71 234 5678', email: 'nuwan.silva@ceylofield.lk',
+    nic: '901234567V', address: '12 Galle Rd, Colombo 03',
+    joinedDate: '2022-01-10',
+    avatar: 'NS',
+    skills: ['FTTH Installation','Fusion Splicing','OTDR Testing','Network Termination','Cable Management'],
+    certifications: ['Furukawa Certified Technician','EXFO Certified','CompTIA Network+'],
+  },
+  {
+    id: 'W-003', name: 'Kasun Fernando',
+    role: 'HVAC Specialist', status: 'active',
+    availability: 'available',
+    completedJobs: 76, rating: 4.8,
+    location: 'Colombo', totalEarnings: 'LKR 760,000',
+    phone: '+94 76 345 6789', email: 'kasun.fernando@ceylofield.lk',
+    nic: '881234567V', address: '78 Baseline Rd, Borella',
+    joinedDate: '2022-06-01',
+    avatar: 'KF',
+    skills: ['Chiller Maintenance','VRF Systems','Refrigerant Handling','BMS Integration','Energy Auditing'],
+    certifications: ['ASHRAE Certified','EPA 608','Sri Lanka Standards Inst.'],
+  },
+  {
+    id: 'W-004', name: 'Dinesh Rajapaksa',
+    role: 'Network Engineer', status: 'off-duty',
+    availability: 'off-duty',
+    completedJobs: 54, rating: 4.6,
+    location: 'Colombo', totalEarnings: 'LKR 648,000',
+    phone: '+94 70 456 7890', email: 'dinesh.rajapaksa@ceylofield.lk',
+    nic: '951234567V', address: '33 Deans Rd, Maradana',
+    joinedDate: '2023-02-20',
+    avatar: 'DR',
+    skills: ['Cisco Routing','Structured Cabling','Firewall Config','VPN Setup','Server Rack Installation'],
+    certifications: ['CCNA','CompTIA A+','Microsoft Certified'],
+  },
+  {
+    id: 'W-005', name: 'Tharindu Wijekon',
+    role: 'Solar Technician', status: 'on-job',
+    availability: 'busy',
+    completedJobs: 87, rating: 4.5,
+    location: 'Ja-Ela', totalEarnings: 'LKR 870,000',
+    phone: '+94 72 567 8901', email: 'tharindu.wijekon@ceylofield.lk',
+    nic: '961234567V', address: '22 Negombo Rd, Ja-Ela',
+    joinedDate: '2022-09-05',
+    currentJob: 'JOB-005',
+    avatar: 'TW',
+    skills: ['PV System Design','Grid-Tie Installation','Net Metering','Battery Storage','Inverter Programming'],
+    certifications: ['SEIA Certified','NABCEP Associate','IEC 62446'],
+  },
+  {
+    id: 'W-006', name: 'Malith Gamage',
+    role: 'Plumbing Specialist', status: 'active',
+    availability: 'available',
+    completedJobs: 63, rating: 4.4,
+    location: 'Colombo', totalEarnings: 'LKR 504,000',
+    phone: '+94 75 678 9012', email: 'malith.gamage@ceylofield.lk',
+    nic: '871234567V', address: '56 Union Place, Colombo 02',
+    joinedDate: '2023-05-12',
+    avatar: 'MG',
+    skills: ['Pipe Fitting','Drain Systems','Water Pumps','Fire Suppression','Sanitary Installation'],
+    certifications: ['NVQ Level 4 Plumbing','CIDA Registered'],
+  },
+  {
+    id: 'W-007', name: 'Ruwan Bandara',
+    role: 'Mechanical Engineer', status: 'active',
+    availability: 'available',
+    completedJobs: 119, rating: 4.8,
+    location: 'Gampaha', totalEarnings: 'LKR 1,428,000',
+    phone: '+94 78 789 0123', email: 'ruwan.bandara@ceylofield.lk',
+    nic: '841234567V', address: '14 Negombo Rd, Gampaha',
+    joinedDate: '2020-11-01',
+    avatar: 'RB',
+    skills: ['Generator Servicing','Diesel Engines','Hydraulic Systems','Preventive Maintenance','Welding'],
+    certifications: ['B.Sc Mechanical Eng (USJ)','CIMA Certified','ISO 9001 Auditor'],
+  },
+]
+
+export const WORKER_STATS = [
+  { label: 'Total Workers',    value: '34',   change: '+3 this month', up: true,  gradient: 'linear-gradient(135deg,#1a6cf6,#7c3aed)' },
+  { label: 'On Job Now',       value: '12',   change: '35% utilization',up: true, gradient: 'linear-gradient(135deg,#059669,#0d9488)' },
+  { label: 'Available',        value: '18',   change: 'Ready to assign',up: true, gradient: 'linear-gradient(135deg,#9333ea,#db2777)' },
+  { label: 'Avg. Rating',      value: '4.7★', change: '+0.2 this month',up: true, gradient: 'linear-gradient(135deg,#d97706,#ea580c)' },
+]
