@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  password   String
+  role       Role     @default(FIELD_WORKER)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  worker     Worker?
+  clientJobs Job[]    @relation("ClientJobs")
+}
+
+model Worker {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id])
+  skills        String[]
+  location      String
+  latitude      Float    @default(7.8731)
+  longitude     Float    @default(80.7718)
+  isAvailable   Boolean  @default(true)
+  rating        Float    @default(0)
+  completedJobs Int      @default(0)
+  jobs          Job[]
+}
+
+model Job {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  status      JobStatus @default(PENDING)
+  priority    Priority  @default(MEDIUM)
+  location    String
+  latitude    Float
+  longitude   Float
+  clientId    String
+  client      User      @relation("ClientJobs", fields: [clientId], references: [id])
+  workerId    String?
+  worker      Worker?   @relation(fields: [workerId], references: [id])
+  assignedAt  DateTime?
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  payment     Payment?
+  notes       String?
+}
+
+model Payment {
+  id        String        @id @default(cuid())
+  jobId     String        @unique
+  job       Job           @relation(fields: [jobId], references: [id])
+  amount    Float
+  status    PaymentStatus @default(PENDING)
+  invoiceNo String        @unique
+  createdAt DateTime      @default(now())
+}
+
+enum Role {
+  ADMIN
+  FIELD_WORKER
+  HR_MANAGER
+  CLIENT
+}
+
+enum JobStatus {
+  PENDING
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  OVERDUE
+}
